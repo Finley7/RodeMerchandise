@@ -2,29 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\MemberRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: MemberRepository::class)]
-class Member
+#[ORM\Entity(repositoryClass: ProductRepository::class)]
+class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthday = null;
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
 
     #[ORM\Column]
-    #[Assert\Unique]
-    private ?int $number = null;
+    private ?int $quantity = null;
 
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Order::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class)]
     private Collection $orders;
 
     public function __construct()
@@ -37,26 +34,26 @@ class Member
         return $this->id;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
+    public function getName(): ?string
     {
-        return $this->birthday;
+        return $this->name;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): self
+    public function setName(string $name): self
     {
-        $this->birthday = $birthday;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getNumber(): ?int
+    public function getQuantity(): ?int
     {
-        return $this->number;
+        return $this->quantity;
     }
 
-    public function setNumber(int $number): self
+    public function setQuantity(int $quantity): self
     {
-        $this->number = $number;
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -73,7 +70,7 @@ class Member
     {
         if (!$this->orders->contains($order)) {
             $this->orders->add($order);
-            $order->setCustomer($this);
+            $order->setProduct($this);
         }
 
         return $this;
@@ -83,8 +80,8 @@ class Member
     {
         if ($this->orders->removeElement($order)) {
             // set the owning side to null (unless already changed)
-            if ($order->getCustomer() === $this) {
-                $order->setCustomer(null);
+            if ($order->getProduct() === $this) {
+                $order->setProduct(null);
             }
         }
 
