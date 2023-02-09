@@ -56,7 +56,7 @@ class ImportMemberCsvCommand extends Command
         foreach ($records as $record) {
             $member = new Member();
             $member->setNumber($record['member_number']);
-            $member->setBirtdate(new \DateTime($record['birthday']));
+            $member->setBirthday(new \DateTime($record['birthday']));
 
             $io->writeln(sprintf('Member %s was imported', $member->getNumber()));
             $this->entityManager->persist($member);

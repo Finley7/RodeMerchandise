@@ -16,7 +16,7 @@ class Member
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birtdate = null;
+    private ?\DateTimeInterface $birthday = null;
 
     #[ORM\Column]
     #[Assert\Unique]
@@ -27,14 +27,14 @@ class Member
         return $this->id;
     }
 
-    public function getBirtdate(): ?\DateTimeInterface
+    public function getBirthday(): ?\DateTimeInterface
     {
-        return $this->birtdate;
+        return $this->birthday;
     }
 
-    public function setBirtdate(\DateTimeInterface $birtdate): self
+    public function setBirthday(\DateTimeInterface $birthday): self
     {
-        $this->birtdate = $birtdate;
+        $this->birthday = $birthday;
 
         return $this;
     }
