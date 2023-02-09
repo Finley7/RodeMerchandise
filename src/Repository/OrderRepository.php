@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Member;
 use App\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,18 @@ class OrderRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOrderByMember(Member $member) {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.customer = :member')
+            ->setParameter('member', $member)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
 //    /**

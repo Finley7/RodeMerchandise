@@ -18,9 +18,6 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?int $quantity = null;
-
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class)]
     private Collection $orders;
 
@@ -42,18 +39,6 @@ class Product
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }

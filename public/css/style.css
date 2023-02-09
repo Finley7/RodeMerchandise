@@ -1,0 +1,14 @@
+body, html {
+    background-color: black;
+}
+
+.landing-row {
+    text-align: center;
+}
+.shop-row > div {
+    text-align: center;
+}
+.shop-row > div > label {
+    display: block;
+    font-size: 1.5em;
+}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <main class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-4">
+                    <form method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('order_merchandise') }}">
+                        <div class="card-body">
+                            <div class="row shop-row">
+                                {% for product in products %}
+                                    <div class="col-md-3 col-xs-12">
+                                        <label for="{{ product.name }}" class="large-1">{{ product.name }}</label>
+                                        <input type="radio" name="item" id="{{ product.name }}" value="{{ product.id }}">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center mt-2">
+                                    <button class="btn btn-danger btn-lg">Bestellen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

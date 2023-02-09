@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <main class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="row shop-row">
+                            <div class="col-12">
+                                <h1>Bedankt voor je bestelling!</h1>
+                                <p>Je bestelling is succesvol geplaatst. Je super toffe {{ order.product.name }} wordt zo snel mogelijk bij jouw sportclub afgeleverd!</p>
+                                <p>Mocht je nog vragen hebben dan kun je ons mailen op <a href="mailto:1895@footbel.com">1895@footbel.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
