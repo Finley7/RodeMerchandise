@@ -189,3 +189,13 @@ https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
 # End of 
 https://www.toptal.com/developers/gitignore/api/phpstorm,composer,symfony
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
