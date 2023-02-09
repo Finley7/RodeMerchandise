@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MemberRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 class Member
@@ -18,6 +19,7 @@ class Member
     private ?\DateTimeInterface $birtdate = null;
 
     #[ORM\Column]
+    #[Assert\Unique]
     private ?int $number = null;
 
     public function getId(): ?int
