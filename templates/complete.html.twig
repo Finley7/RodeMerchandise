@@ -8,9 +8,9 @@
                     <div class="card-body">
                         <div class="row shop-row">
                             <div class="col-12">
-                                <h1>Bedankt voor je bestelling!</h1>
-                                <p>Je bestelling is succesvol geplaatst. Je super toffe {{ order.product.name }} wordt zo snel mogelijk bij jouw sportclub afgeleverd!</p>
-                                <p>Mocht je nog vragen hebben dan kun je ons mailen op <a href="mailto:1895@footbel.com">1895@footbel.com</a></p>
+                                <h1>{{ 'order.complete.thanks_header'|trans }}</h1>
+                                <p>{{ 'order.complete.sub_header'|trans({'%product%': order.product.name}, 'messages') }}</p>
+                                <p>{{ 'order.complete.mail_info'|trans }} <a href="mailto:1895@footbel.com">1895@footbel.com</a></p>
                             </div>
                         </div>
                     </div>

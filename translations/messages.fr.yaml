@@ -1,0 +1,29 @@
+order:
+  complete:
+    thanks_header: 'Merci pour votre commande!'
+    sub_header: 'Votre commande a été placée avec succès. Votre %product% super cool sera livré à votre club sportif dès
+     que possible!'
+    mail_info: 'Si vous avez des questions, vous pouvez nous envoyer un e-mail à'
+
+landing:
+  about_text: 'En tant que membre de 1895, vous recevrez un joli cadeau. Vous avez le choix entre une casquette, un foulard ou un drapeau. Entrez votre numéro de membre et votre date de naissance à côté de celui-ci, et faites votre choix.'
+  label:
+    birthday: 'Date de naissance'
+    member_number: 'Numéro de membre'
+
+  button:
+    next: 'Suivante'
+
+  flash:
+    'member_not_found': "Aucun membre n'a pu être trouvé avec ce numéro de membre ou cette date de naissance!"
+
+shop:
+  button:
+    order: 'Commander'
+
+  flash:
+    success: 'La commande a été placée! Merci!'
+
+general:
+  flash:
+    not_logged_in: "Vous n'êtes pas connecté. Connectez-vous à nouveau avec votre date de naissance et votre numéro de membre!"

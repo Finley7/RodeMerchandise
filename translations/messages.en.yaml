@@ -1,0 +1,30 @@
+order:
+  complete:
+    thanks_header: 'Thank you for your order!'
+    sub_header: 'Your order has been successfully placed. Your super cool %product% will be delivered to your sports club as soon as possible!'
+    mail_info: 'If you have any questions, you can email us at'
+
+landing:
+  about_text: 'As a member of 1895, you will receive a nice gift. You have the choice between a cap, a scarf
+    or a flag. Enter your member number and date of birth next to it, and make your choice.'
+
+  label:
+    birthday: 'Date of birth'
+    member_number: 'Member number'
+
+  button:
+    next: 'Next'
+
+  flash:
+    member_not_found: 'No member could be found with this member number or date of birth!'
+
+shop:
+  button:
+    order: 'Order'
+
+  flash:
+    success: 'The order has been placed! Thank you!'
+
+general:
+  flash:
+    not_logged_in: 'You are not logged in. Login again with your date of birth and member number!'

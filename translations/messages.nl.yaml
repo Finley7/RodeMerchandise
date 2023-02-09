@@ -1,0 +1,29 @@
+order:
+  complete:
+    thanks_header: 'Bedankt voor uw bestelling!'
+    sub_header: 'Je bestelling is succesvol geplaatst. Je super toffe %product% wordt zo snel mogelijk bij jouw sportclub afgeleverd!'
+    mail_info: 'Mocht je nog vragen hebben dan kun je ons mailen op'
+
+landing:
+  about_text: 'Als lid van 1895 krijg je een mooi geschenk. Je hebt de keuze tussen een pet, een sjaal
+                                of een vlag. Vul hiernaast jouw lidnummer en geboortedatum in, en maak je keuze.'
+  label:
+    birthday: 'Geboortedatum'
+    member_number: 'Lidnummer'
+
+  button:
+    next: 'Volgende'
+
+  flash:
+    'member_not_found': 'Er kan geen lid worden gevonden met dit lidnummer of geboortedatum!'
+
+shop:
+  button:
+    order: 'Bestellen'
+
+  flash:
+    success: 'De bestelling is geplaatst! Dankjewel!'
+
+general:
+  flash:
+    not_logged_in: 'Je bent niet ingelogd. Log opnieuw in met je geboortedatum en lidnummer!'

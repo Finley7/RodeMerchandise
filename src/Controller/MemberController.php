@@ -7,18 +7,33 @@ use App\Entity\Order;
 use App\Repository\MemberRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MemberController extends AbstractController
 {
+    private MemberRepository $memberRepository;
+    private OrderRepository $orderRepository;
+    private ProductRepository $productRepository;
+    private TranslatorInterface $translator;
+    public function __construct(MemberRepository $memberRepository, OrderRepository $orderRepository, ProductRepository $productRepository, TranslatorInterface $translator)
+    {
+        $this->memberRepository = $memberRepository;
+        $this->orderRepository = $orderRepository;
+        $this->productRepository = $productRepository;
+        $this->translator = $translator;
+    }
+
     /**
      * @Route("/", name="member_landing")
+     * @throws NonUniqueResultException
      */
-    public function landing(Request $request, MemberRepository $memberRepository, OrderRepository $orderRepository): RedirectResponse|Response
+    public function landing(Request $request): RedirectResponse|Response
     {
 
         if($request->getMethod() == "POST" && $this->isCsrfTokenValid('member_merchandise', $request->request->get('_token'))) {
@@ -26,17 +41,17 @@ class MemberController extends AbstractController
             $number = $request->request->get('number');
             $birthday = new \DateTime($request->request->get('birthday'));
 
-            $member = $memberRepository->findOneBy(['number' => $number, 'birthday' => $birthday]);
+            $member = $this->memberRepository->findOneBy(['number' => $number, 'birthday' => $birthday]);
 
             if($member == null) {
-                $this->addFlash('danger', 'Er kan geen lid worden gevonden met dit lidnummer of geboortedatum!');
+                $this->addFlash('danger', $this->translator->trans('landing.flash.member_not_found'));
                 return $this->redirectToRoute('member_landing');
             }
 
             $session = $request->getSession();
             $session->set('member', $member);
 
-            $orders = $orderRepository->findOrderByMember($member);
+            $orders = $this->orderRepository->findOrderByMember($member);
             $route = $orders == null ? 'member_merchandise' : 'order_complete';
 
             return $this->redirectToRoute($route);
@@ -49,12 +64,12 @@ class MemberController extends AbstractController
     /**
      * @Route("/merchandise-shop", name="member_merchandise")
      */
-    public function shop(Request $request, ProductRepository $productRepository, OrderRepository $orderRepository, MemberRepository $memberRepository): Response {
+    public function shop(Request $request): Response {
 
         $member = $this->_checkLogin($request);
-        $member = $memberRepository->find($member->getId());
+        $member = $this->memberRepository->find($member->getId());
 
-        if($orderRepository->findOrderByMember($member) != null) {
+        if($this->orderRepository->findOrderByMember($member) != null) {
             return $this->redirectToRoute('order_complete');
         }
 
@@ -63,16 +78,16 @@ class MemberController extends AbstractController
 
         if($request->getMethod() == "POST" && $this->isCsrfTokenValid('order_merchandise', $request->request->get('_token'))) {
 
-            $product = $productRepository->find($request->request->get('item'));
+            $product = $this->productRepository->find($request->request->get('item'));
             $order->setProduct($product);
 
-            $orderRepository->save($order, true);
+            $this->orderRepository->save($order, true);
 
-            $this->addFlash('success', 'De bestelling is geplaatst! Dankjewel!');
+            $this->addFlash('success', $this->translator->trans('shop.flash.success'));
             return $this->redirectToRoute('order_complete');
         }
 
-        return $this->render('shop.html.twig', ['member' => $member, 'products' => $productRepository->findAll()]);
+        return $this->render('shop.html.twig', ['member' => $member, 'products' => $this->productRepository->findAll()]);
     }
 
     /**
@@ -81,10 +96,10 @@ class MemberController extends AbstractController
      * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function complete(Request $request, OrderRepository $orderRepository) {
+    public function complete(Request $request) {
 
         $member = $this->_checkLogin($request);
-        $order = $orderRepository->findOrderByMember($member);
+        $order = $this->orderRepository->findOrderByMember($member);
 
         return $this->render('complete.html.twig', ['order' => $order, 'member' => $member]);
     }
@@ -95,7 +110,7 @@ class MemberController extends AbstractController
         $member = $session->get('member');
 
         if($member == null) {
-            $this->addFlash('danger', 'Je bent niet ingelogd. Log opnieuw in met je geboortedatum en lidnummer!');
+            $this->addFlash('danger', $this->translator->trans('general.flash.not_logged_in'));
             return $this->redirectToRoute('member_landing');
         }
 
