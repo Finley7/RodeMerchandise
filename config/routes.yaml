@@ -8,4 +8,4 @@ controllers:
     requirements:
         _locale: '%app_locales%'
     defaults:
-        _locales: '%locale%'
+        _locale: '%locale%'
