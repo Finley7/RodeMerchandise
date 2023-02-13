@@ -3,34 +3,40 @@
 {% block content %}
 
     <main class="container">
+        <form method="post">
         <div class="row">
             <div class="col-12">
-                <div class="card mt-4">
-                    <form method="post">
+                <div class="card mt-5">
                     <input type="hidden" name="_token" value="{{ csrf_token('member_merchandise') }}">
                     <div class="card-body">
-                        <div class="row landing-row">
-                            <div class="col-md-4 col-xs-12">
-                                {{ 'landing.about_text'|trans }}
+                        <div class="row landing-row mb-4">
+                            <div class="col-md-4 col-xs-12 d-flex align-items-center">
+                                    {{ 'landing.about_text'|trans }}
                             </div>
                             <div class="col-md-4 col-xs-12">
+                                <div class="d-block text-center mb-4">
+                                    <img src="{{ asset('/images/calendar.png') }}" alt="Calendar" width="150">
+                                </div>
                                 <label for="birthDate">{{ 'landing.label.birthday'|trans }}</label>
                                 <input class="form-control" name="birthday" type="date" id="birthDate">
                             </div>
                             <div class="col-md-4 col-xs-12">
+                                <div class="d-block text-center mb-4">
+                                    <img src="{{ asset('/images/football-shirt.png') }}" alt="Calendar" width="150">
+                                </div>
                                 <label for="memberNumber">{{ 'landing.label.member_number'|trans }}</label>
-                                <input class="form-control" name="number" type="number" id="memberNumber">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 text-center mt-2">
-                                <button class="btn btn-danger btn-lg">{{ 'landing.button.next'|trans }}</button>
+                                <input placeholder="12345" class="form-control" name="number" type="number" id="memberNumber">
                             </div>
                         </div>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>
+        <div class="row n-mt">
+            <div class="col-12 text-center">
+                <button class="btn btn-danger btn-lg">{{ 'landing.button.next'|trans }}</button>
+            </div>
+        </div>
+        </form>
     </main>
 {% endblock %}

@@ -1,14 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
 body, html {
     background-color: black;
+    background-image: url(../images/bg.jpg);
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .landing-row {
     text-align: center;
 }
+.landing-row > div:not(:last-child) {
+    border-right: 3px dashed #bb9b9b;
+}
 .shop-row > div {
     text-align: center;
 }
-.shop-row > div > label {
-    display: block;
+.shop-row > div > label, .landing-row > div > label {
     font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+}
+.lang-selector a {
+    color: white;
+    text-decoration: none;
+}
+.lang-selector a:hover {
+    color: darkred;
+}
+.n-mt {
+    margin-top: -1.5rem;
+}
+.alert {
+    border-radius: 0 0 .2rem .2rem;
+}
+.alert-danger {
+    background-color: #721c24;
+    border-color: #721c24;
+    color: #fff;
+}
+.card, .btn, .form-control {
+    border-radius: 0.2rem;
+}
+.btn {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1em;
 }
