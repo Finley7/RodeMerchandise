@@ -1,11 +1,18 @@
 controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Controller/Default/
+        namespace: App\Controller\Default
+    type: attribute
 
+member_controllers:
+    resource:
+        path: ../src/Controller/Member/
+        namespace: App\Controller\Member
     type: attribute
     prefix: /{_locale}
     requirements:
         _locale: '%app_locales%'
     defaults:
         _locale: '%locale%'
+
+

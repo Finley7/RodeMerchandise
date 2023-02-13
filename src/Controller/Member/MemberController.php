@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Member;
 
 use App\Entity\Member;
 use App\Entity\Order;
 use App\Repository\MemberRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
+use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +19,29 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MemberController extends AbstractController
 {
+    /**
+     * @var MemberRepository
+     */
     private MemberRepository $memberRepository;
+    /**
+     * @var OrderRepository
+     */
     private OrderRepository $orderRepository;
+    /**
+     * @var ProductRepository
+     */
     private ProductRepository $productRepository;
+    /**
+     * @var TranslatorInterface
+     */
     private TranslatorInterface $translator;
+
+    /**
+     * @param MemberRepository $memberRepository
+     * @param OrderRepository $orderRepository
+     * @param ProductRepository $productRepository
+     * @param TranslatorInterface $translator
+     */
     public function __construct(MemberRepository $memberRepository, OrderRepository $orderRepository, ProductRepository $productRepository, TranslatorInterface $translator)
     {
         $this->memberRepository = $memberRepository;
@@ -32,6 +53,7 @@ class MemberController extends AbstractController
     /**
      * @Route("/", name="member_landing")
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function landing(Request $request): RedirectResponse|Response
     {
@@ -39,7 +61,7 @@ class MemberController extends AbstractController
         if($request->getMethod() == "POST" && $this->isCsrfTokenValid('member_merchandise', $request->request->get('_token'))) {
 
             $number = $request->request->get('number');
-            $birthday = new \DateTime($request->request->get('birthday'));
+            $birthday = new DateTime($request->request->get('birthday'));
 
             $member = $this->memberRepository->findOneBy(['number' => $number, 'birthday' => $birthday]);
 
@@ -58,11 +80,12 @@ class MemberController extends AbstractController
 
         }
 
-        return $this->render('landing.html.twig');
+        return $this->render('member/landing.html.twig');
     }
 
     /**
      * @Route("/merchandise-shop", name="member_merchandise")
+     * @throws NonUniqueResultException
      */
     public function shop(Request $request): Response {
 
@@ -87,23 +110,28 @@ class MemberController extends AbstractController
             return $this->redirectToRoute('order_complete');
         }
 
-        return $this->render('shop.html.twig', ['member' => $member, 'products' => $this->productRepository->findAll()]);
+        return $this->render('member/shop.html.twig', ['member' => $member, 'products' => $this->productRepository->findAll()]);
     }
 
     /**
      * @Route("/complete", name="order_complete")
      * @param Request $request
-     * @param OrderRepository $orderRepository
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function complete(Request $request) {
+    public function complete(Request $request): Response
+    {
 
         $member = $this->_checkLogin($request);
         $order = $this->orderRepository->findOrderByMember($member);
 
-        return $this->render('complete.html.twig', ['order' => $order, 'member' => $member]);
+        return $this->render('member/complete.html.twig', ['order' => $order, 'member' => $member]);
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Member
+     */
     private function _checkLogin(Request $request) : RedirectResponse|Member {
 
         $session = $request->getSession();
