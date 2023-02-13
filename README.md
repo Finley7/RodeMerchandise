@@ -12,4 +12,4 @@ The setup follows basic Symfony guidelines. Clone the repository and run `compos
 5. Configure a local apache server like MAMP, XAMP or run the Symphony Web Server.
 6. Open your browser and follow the applications instructions.
 
-That's it. Any questions can be send to [finley.siebert@outlook.com](mailto:finley.siebert@outlook.com)
+That's it. Any questions can be sent to [finley.siebert@outlook.com](mailto:finley.siebert@outlook.com)
